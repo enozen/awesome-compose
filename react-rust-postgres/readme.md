@@ -1,3 +1,4 @@
+# React-Rust-Postgres CI/CD Demo
 ## Compose sample application
 ### React application with a Rust backend and a Postgresql database
 
