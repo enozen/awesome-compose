@@ -74,3 +74,4 @@ Removing react-rust-postgres_frontend_1 ... done
 Removing react-rust-postgres_db_1       ... done
 Removing network react-rust-postgres_default
 ```
+ 
