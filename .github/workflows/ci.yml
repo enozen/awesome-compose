@@ -9,16 +9,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        # Çfarë ndodh këtu? Shkarkohet kodi nga repo në makinen që ekzekuton pipeline
+
       - name: Setup Node.js me cache
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
         # Çfarë ndodh këtu? Instalojmë Node.js dhe përdorim cache, për të përshpejtuar ndërtimet e ardhshme
-      - run: npm install
-        # Çfarë ndodh këtu? Instalohen të gjitha paketat npm nga package.json
-      - run: npm run build --if-present
-        # Çfarë ndodh këtu? Ndërtohet aplikacioni nëse ekziston script-i për build
-      - run: npm test
+        working-directory: react-rust-postgres/frontend
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: react-rust-postgres/frontend
+        # Çfarë ndodh këtu? Instalohen të gjitha paketat npm nga package.json brenda frontend
+
+      - name: Build app
+        run: npm run build --if-present
+        working-directory: react-rust-postgres/frontend
+        # Çfarë ndodh këtu? Ndërtohet React app nga folderi correct
+
+      - name: Run tests
+        run: npm test
+        working-directory: react-rust-postgres/frontend
         # Çfarë ndodh këtu? Ekzekutohen testet automatike për frontend
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: react-rust-postgres/frontend/build/
+        # Çfarë ndodh këtu? Ngarkohet folderi “build” si artefakt për ta shkarkuar nga Actions
